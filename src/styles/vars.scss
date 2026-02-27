@@ -1,0 +1,33 @@
+:root {
+  /* цвета */
+  --c-bg: #e2e2e2;
+  --c-surface: #fafafa;
+  --c-border: rgba(255, 255, 255, 0.12);
+  --c-text: #1b1b1b;
+  --c-text-muted: rgba(197, 197, 197, 0.72);
+  --c-primary: #3a5fcf;
+  --c-primary-dark: #2a4abf;
+  --c-danger: #ff4d4f;
+
+  /* шрифт */
+  --ff-base: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --ff-accent: "Newsreader", serif;
+
+  /* кегль */
+  --fs-body: 16px;
+  --fs-caption: 14px;
+  --fs-big: 42px;
+  --fs-h1: 24px;
+  --fs-h2: 20px;
+}
+
+/* адаптив */
+@media (max-width: 768px) {
+  :root {
+    --fs-body: 15px;
+    --fs-caption: 13px;
+    --fs-big: 32px;
+    --fs-h1: 22px;
+    --fs-h2: 18px;
+  }
+}

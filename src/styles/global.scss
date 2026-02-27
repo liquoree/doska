@@ -1,0 +1,53 @@
+@use "./vars.scss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ff-base);
+  font-size: var(--fs-body);
+  color: var(--c-text);
+  background: var(--c-bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+  color: var(--c-text-muted);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  cursor: pointer;
+}

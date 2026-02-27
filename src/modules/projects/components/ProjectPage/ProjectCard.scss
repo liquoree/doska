@@ -1,0 +1,27 @@
+.project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 30px;
+    border-radius: 10px;
+    background-color: var(--c-primary);
+    width: 40%;
+    box-shadow: var(--shadow);
+    color: var(--c-bg);
+    cursor: pointer;
+
+
+    h2 {
+        font-size: var(--fs-h1);
+        font-weight: 600;
+    }
+
+    p {
+        font-size: var(--fs-);
+        color: var(--c-surface);
+    }
+
+    &:hover {
+        background-color: var(--c-primary-dark);
+    }
+}
