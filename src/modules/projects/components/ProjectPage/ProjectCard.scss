@@ -1,7 +1,7 @@
 .project-card {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 7px;
     padding: 20px 30px;
     border-radius: 10px;
     background-color: var(--c-primary);
@@ -17,8 +17,13 @@
     }
 
     p {
-        font-size: var(--fs-);
+        font-size: var(--fs-caption);
         color: var(--c-surface);
+    }
+
+    div {
+        font-size: var(--fs-caption);
+        color: var(--c-text-muted);
     }
 
     &:hover {

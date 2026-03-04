@@ -12,6 +12,7 @@ export default function ProjectCard({ title, description, onClick, slug }: Props
     return (
         <Link to={`/projects/${slug}`} className="project-card" onClick={onClick}>
             <h2>{title}</h2>
+            {slug && <div>@{slug}</div>}  
             <p>{description}</p>
         </Link>
     );

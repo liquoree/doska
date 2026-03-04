@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
 html,
 body {
   height: 100%;
