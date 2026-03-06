@@ -1,0 +1,33 @@
+.board-card {
+    padding: 0 20px 20px;
+    background-color: var(--c-primary);
+    border-radius: 10px;
+    width: 400px;
+    min-height: 200px;
+    height: fit-content;
+
+    &__title {
+        font-size: var(--fs-body);
+        color: var(--c-bg);
+        font-family: var(--ff-base);
+        font-weight: 700;
+        text-align: center;
+        padding: 15px;
+        overflow: hidden;
+    }
+    
+    &__tasks-box {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        min-height: 200px;
+
+        > span:only-child {
+            margin: auto;
+            text-align: center;
+            color: var(--c-bg);
+            font-size: var(--fs-body);
+        }
+    }
+}

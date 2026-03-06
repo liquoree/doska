@@ -3,13 +3,14 @@ export type Project = {
     title: string;
     slug: string;
     description?: string;
-    boards?: Board[]
+    boards: Board[]
+    users: User[]
 }
 
 export type Board = {
     id: string;
     title: string;
-    tasks?: Task[];
+    tasks: Task[];
 }
 
 export type Task = {
@@ -17,11 +18,11 @@ export type Task = {
     title: string;
     isCompleted: boolean;
     responsible: User[];
-    createdAt: Date;
+    createdAt: string;
 }
 
 export type User = {
     id: string;
     nickname: string;
-    fullname: string;
 }
+

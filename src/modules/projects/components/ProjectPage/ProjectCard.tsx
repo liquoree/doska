@@ -1,16 +1,12 @@
 import { Link } from 'react-router-dom';
 import './ProjectCard.scss';
+import type { Project } from '@/shared/types/types';
 
-type Props = {
-    title: string;
-    description: string;
-    onClick?: () => void;
-    slug?: string;
-}
+type Props = Omit<Project, 'boards'>
 
-export default function ProjectCard({ title, description, onClick, slug }: Props) {
+export default function ProjectCard({ id, title, description, slug }: Props) {
     return (
-        <Link to={`/projects/${slug}`} className="project-card" onClick={onClick}>
+        <Link to={`/projects/${id}`} className="project-card">
             <h2>{title}</h2>
             {slug && <div>@{slug}</div>}  
             <p>{description}</p>

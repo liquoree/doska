@@ -1,0 +1,78 @@
+.task-card {
+    padding: 15px;
+    background-color: var(--c-bg);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 200px;
+    width: 100%;
+    position: relative;
+    
+    &__title-box {
+        display: flex;
+        gap: 8px;
+
+        &--text {
+            font-size: var(--fs-body);
+            flex: 1;
+            min-width: 0;
+
+            &--change-input {
+                border: 2px solid var(--c-primary);
+                border-radius: 5px;
+                outline: none;
+            }
+        }
+
+        &--status {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 2px solid var(--c-primary);
+            cursor: pointer;
+            position: relative;
+
+            &.completed {
+                background-color: var(--c-primary);
+                &::before {
+                    content: '✔';
+                    color: var(--c-bg);
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-45%, -50%);
+                }
+            }
+        }
+    }
+
+    &__info-box {
+        display: flex;
+        align-items: center;
+
+        &--date {
+            font-size: var(--fs-small);
+            color: var(--c-text-muted);
+            font-weight: 600;
+        }
+
+        &--responsible {
+            display: flex;
+            gap: 5px;
+            margin-left: auto;
+
+            &-item {
+                font-size: var(--fs-small);
+                color: var(--c-bg);
+                font-weight: 600;
+                background-color: var(--c-primary);
+                padding: 2px 5px;
+                border-radius: 5px;
+                width: fit-content;
+                margin-left: auto;
+            }
+        }
+    }
+}

@@ -21,7 +21,7 @@ export default function App() {
         }
       />
       <Route
-        path="/projects/:projectSlug"
+        path="/projects/:projectId"
         element={
           <ProtectedRoute>
             <ProjectPage />

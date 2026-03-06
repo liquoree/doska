@@ -1,18 +1,18 @@
 .project-page {
     width: 100%;
-
-    h1 {
+    &__title {
+        margin-top: 25px;
         font-size: var(--fs-big);
-        margin-bottom: 10px;
+        margin-bottom: 40px;
         font-family: var(--ff-accent);
         font-weight: 500;
         text-align: center;
     }
 
-    p {
-        font-size: var(--fs-body);
-        color: var(--c-text);
-        text-align: center;
-        margin-top: 20px;
+    &__boards-box {
+        display: flex;
+        width: 100%;
+        padding: 0 60px;
+        gap: 20px;
     }
 }

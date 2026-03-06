@@ -1,10 +1,10 @@
 :root {
   /* цвета */
-  --c-bg: #e2e2e2;
+  --c-bg: #e9e9e9;
   --c-surface: #fafafa;
   --c-border: rgba(255, 255, 255, 0.12);
   --c-text: #1b1b1b;
-  --c-text-muted: rgba(197, 197, 197, 0.72);
+  --c-text-muted: rgba(128, 128, 128, 0.72);
   --c-primary: #3a5fcf;
   --c-primary-dark: #2a4abf;
   --c-danger: #ff4d4f;
@@ -16,6 +16,7 @@
   /* кегль */
   --fs-body: 16px;
   --fs-caption: 14px;
+  --fs-small: 12px;
   --fs-big: 42px;
   --fs-h1: 24px;
   --fs-h2: 20px;
