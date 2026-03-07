@@ -1,25 +1,28 @@
-import './ProjectsListPage.scss';
-import ProjectCard from "../components/ProjectPage/ProjectCard";
-import useProjects from '../store/Projects.store';
+import './ProjectsListPage.scss'
+import ProjectCard from "../components/ProjectPage/ProjectCard"
+import useProjects from '../store/Projects.store'
+import { useShallow } from 'zustand/shallow'
 
 export default function ProjectsListPage() {
-  const items = useProjects(state => state.projects)
+    const projects = useProjects(useShallow(s => Object.values(s.projects)))
 
-  return (
-    <div className="projects-list-page">
-      <h1>Проекты</h1>
-      <div className="projects-list-page__cards-box">
-        {items.map((item) => (
-          <ProjectCard
-            id={item.id}
-            key={item.id} 
-            title={item.title} 
-            description={item.description || ''} 
-            slug={item.slug} 
-          />
-        ))}
-        {!!!items && <h2>Проектов пока нет</h2>}
-      </div>
-    </div>
-  );
+    return (
+        <div className="projects-list-page">
+            <h1>Проекты</h1>
+            <div className="projects-list-page__cards-box">
+                {projects.length > 0
+                    ? projects.map(project => (
+                        <ProjectCard
+                            key={project.id}
+                            id={project.id}
+                            title={project.title}
+                            description={project.description || ''}
+                            slug={project.slug}
+                        />
+                    ))
+                    : <h2>Проектов пока нет</h2>
+                }
+            </div>
+        </div>
+    )
 }

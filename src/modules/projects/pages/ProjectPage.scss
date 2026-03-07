@@ -1,7 +1,11 @@
 .project-page {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
     &__title {
-        margin-top: 25px;
+        padding-top: 25px;
         font-size: var(--fs-big);
         margin-bottom: 40px;
         font-family: var(--ff-accent);
@@ -12,7 +16,33 @@
     &__boards-box {
         display: flex;
         width: 100%;
+        flex: 1;
         padding: 0 60px;
         gap: 20px;
+        overflow-x: auto;
+
+        .empty {
+            text-align: center;
+            width: 100%;
+        }
+
+        .add-board-btn {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            color: var(--c-primary);
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid var(--c-primary);
+            user-select: none;
+            flex-shrink: 0;
+
+            span {
+                margin-top: -5px;
+            }
+        }
     }
 }

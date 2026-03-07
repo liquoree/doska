@@ -1,46 +1,38 @@
-import type { Board } from '@/shared/types/types'
 import './BoardCard.scss'
 import { TaskCard } from '../task/TaskCard'
 import useProjects from '../../store/Projects.store'
+import { BoardContext } from '../../context/BoardContext'
+import { useShallow } from 'zustand/shallow'
+import { useBoard } from '../../hooks/useBoard'
 
-type Props = Board & {
-    projectId: string
+type Props = {
+    boardId: string
 }
 
-export const BoardCard = ({ id, title, tasks, projectId }: Props) => {
-    const updateTask = useProjects(state => state.updateTask);
+export const BoardCard = ({ boardId }: Props) => {
+    const { board, remove } = useBoard(boardId)
+    const taskIds = useProjects(useShallow(s =>
+        Object.values(s.tasks)
+            .filter(t => t.boardId === boardId)
+            .map(t => t.id)
+    ))
 
-    const onToggleTaskStatus = (taskId: string) => {
-        updateTask(projectId, id, taskId, task => {
-            task.isCompleted = !task.isCompleted;
-        });
-    };
-
-    const onChangeTaskTitle = (taskId: string, newTitle: string) => {
-        updateTask(projectId, id, taskId, task => {
-            task.title = newTitle;
-        })
-    }
-
-    return(
-        <div className="board-card">
-            <h1 className='board-card__title'>{title}</h1>
-            <div className="board-card__tasks-box"> 
-            {tasks.length > 0
-                ? tasks.map(task => (
-                    <TaskCard
-                        key={task.id}
-                        title={task.title}
-                        createdAt={task.createdAt}
-                        isCompleted={task.isCompleted}
-                        responsible={task.responsible}
-                        onToggleStatus={() => onToggleTaskStatus(task.id)}
-                        onChangeTitle={(newTitle) => onChangeTaskTitle(task.id, newTitle)}
-                    />
-                ))
-                : <span>Задач пока нет</span>
-            }
+    return (
+        <BoardContext.Provider value={boardId}>
+            <div className="board-card">
+                <h1 className='board-card__title'>
+                    <span>{board.title}</span>
+                    <span className='x' onClick={remove}>×</span>
+                </h1>
+                <div className="board-card__tasks-box">
+                    {taskIds.length > 0
+                        ? taskIds.map(taskId => (
+                            <TaskCard key={taskId} taskId={taskId} />
+                        ))
+                        : <span>Задач пока нет</span>
+                    }
+                </div>
             </div>
-        </div>
+        </BoardContext.Provider>
     )
 }

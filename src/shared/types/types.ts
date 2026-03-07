@@ -1,28 +1,27 @@
-export type Project = {
-    id: string;
-    title: string;
-    slug: string;
-    description?: string;
-    boards: Board[]
-    users: User[]
-}
-
-export type Board = {
-    id: string;
-    title: string;
-    tasks: Task[];
+export type User = {
+    id: string
+    nickname: string
+    projectIds?: string[]
 }
 
 export type Task = {
-    id: string;
-    title: string;
-    isCompleted: boolean;
-    responsible: User[];
-    createdAt: string;
+    id: string
+    title: string
+    isCompleted: boolean
+    responsibleIds: string[]
+    createdAt: string
+    boardId: string
 }
 
-export type User = {
-    id: string;
-    nickname: string;
+export type Board = {
+    id: string
+    title: string
+    projectId: string
 }
 
+export type Project = {
+    id: string
+    title: string
+    description?: string
+    slug?: string
+}

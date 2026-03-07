@@ -1,78 +1,80 @@
-import { MockProjects } from "@/shared/utils/mock-projects";
-import type { Task, Board, Project, User } from "@/shared/types/types";
-import { create } from "zustand";
-import { type Draft, produce } from 'immer'
+import type { Task, Board, Project, User } from "@/shared/types/types"
+import { MockProjects, MockBoards, MockTasks, MockUsers } from "@/shared/utils/mock-projects"
+import { create } from "zustand"
+import { produce, type Draft } from 'immer'
 
 interface ProjectState {
-    projects: Project[]
+    projects: Record<string, Project>
+    boards: Record<string, Board>
+    tasks: Record<string, Task>
+    users: Record<string, User>
+
     addProject: (project: Project) => void
     removeProject: (id: string) => void
-    addBoard: (projecId: string, board: Board) => void
-    addTask: (projectId: string, boardId: string, task: Task) => void
-    updateTask: (projectId: string, boardId: string, taskId: string, updater: (task: Draft<Task>) => void) => void
-    addUser: (projectId: string, user: User) => void
-    removeUser: (projectId: string, userId: string) => void
+
+    addBoard: (board: Board) => void
+    removeBoard: (boardId: string) => void
+
+    addTask: (task: Task) => void
+    updateTask: (taskId: string, updater: (task: Draft<Task>) => void) => void
+    removeTask: (taskId: string) => void
+
+    addUser: (user: User) => void
+    removeUser: (userId: string) => void
 }
 
 const useProjects = create<ProjectState>((set) => ({
     projects: MockProjects,
+    boards: MockBoards,
+    tasks: MockTasks,
+    users: MockUsers,
 
-    //projects
-    addProject: (project) => set(state => ({
-        projects: [...state.projects, project] 
+    addProject: (project) => set(produce(state => {
+        state.projects[project.id] = project
     })),
 
-    removeProject: (id) => set(state => ({
-        projects: state.projects.filter(p => p.id !== id)
+    removeProject: (id) => set(produce(state => {
+        (Object.values(state.boards) as Board[])
+            .filter(b => b.projectId === id)
+            .forEach(b => {
+                (Object.values(state.tasks) as Task[])
+                    .filter(t => t.boardId === b.id)
+                    .forEach(t => delete state.tasks[t.id])
+                delete state.boards[b.id]
+            })
+        delete state.projects[id]
     })),
 
-    //boards
-    addBoard: (projectId, board) => set(state => ({
-        projects: state.projects.map(p => 
-            p.id === projectId 
-                ? { ...p, boards: [...p.boards, board]}
-                : p
-        ),
+    addBoard: (board) => set(produce(state => {
+        state.boards[board.id] = board
     })),
 
-    //tasks
-    addTask: (projectId, boardId, task) => set(state => ({
-        projects: state.projects.map(p =>
-            p.id === projectId
-                ? {...p, boards: p.boards.map(b => 
-                    b.id === boardId
-                        ? { ...b, tasks: [...b.tasks, task]}
-                        : b
-                )}
-                : p
-        ),
+    removeBoard: (boardId) => set(produce(state => {
+        (Object.values(state.tasks) as Task[])
+            .filter(t => t.boardId === boardId)
+            .forEach(t => delete state.tasks[t.id])
+        delete state.boards[boardId]
     })),
 
-    updateTask: (projectId, boardId, taskId, updater) =>
-        set(produce(state => {
-            const task = state.projects
-                .find((p: { id: string; }) => p.id === projectId)?.boards
-                .find((b: { id: string; }) => b.id === boardId)?.tasks
-                .find((t: { id: string; }) => t.id === taskId);
-            if (task) updater(task);
-        })),
-
-    // users
-    addUser: (projectId, user) => set(state => ({
-        projects: state.projects.map(p => 
-            p.id === projectId 
-                ? { ...p, users: [...p.users, user]}
-                : p
-        ),
+    addTask: (task) => set(produce(state => {
+        state.tasks[task.id] = task
     })),
 
-    removeUser: (projectId, userId) => set(state => ({
-        projects: state.projects.map(p => 
-            p.id === projectId 
-                ? { ...p, users: p.users.filter(u => u.id !== userId)}
-                : p
-        ),
-    }))
+    updateTask: (taskId, updater) => set(produce(state => {
+        updater(state.tasks[taskId])
+    })),
+
+    removeTask: (taskId) => set(produce(state => {
+        delete state.tasks[taskId]
+    })),
+
+    addUser: (user) => set(produce(state => {
+        state.users[user.id] = user
+    })),
+
+    removeUser: (userId) => set(produce(state => {
+        delete state.users[userId]
+    })),
 }))
 
 export default useProjects

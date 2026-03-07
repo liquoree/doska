@@ -8,6 +8,16 @@
     max-height: 200px;
     width: 100%;
     position: relative;
+
+    .x {
+        position: absolute;
+        user-select: none;
+        top: -3px;
+        right: -3px;
+        font-size: var(--fs-h2);
+        cursor: pointer;
+        width: 20px;
+    }
     
     &__title-box {
         display: flex;
@@ -56,12 +66,14 @@
             font-size: var(--fs-small);
             color: var(--c-text-muted);
             font-weight: 600;
+            user-select: none;
         }
 
         &--responsible {
             display: flex;
             gap: 5px;
             margin-left: auto;
+            align-items: center;
 
             &-item {
                 font-size: var(--fs-small);
@@ -72,6 +84,21 @@
                 border-radius: 5px;
                 width: fit-content;
                 margin-left: auto;
+
+                &.plus {
+                    background-color: var(--c-bg);
+                    color: var(--c-primary)
+                }
+            }
+
+            .opts {
+                font-size: var(--fs-body);
+                font-weight: 600;
+                color: var(--c-text-muted);
+                cursor: pointer;
+                width: 10px;
+                text-align: center;
+                user-select: none;
             }
         }
     }
