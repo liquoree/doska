@@ -4,7 +4,7 @@ import { useProjectContext } from "../../context/ProjectContext"
 import useProjects from "../../store/Projects.store"
 import type { User } from "@/shared/types/types"
 import { useShallow } from "zustand/shallow"
-import './RespModal.scss'
+import './Modal.scss'
 
 type Props = {
     taskId: string

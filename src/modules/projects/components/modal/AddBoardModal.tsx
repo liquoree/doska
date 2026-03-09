@@ -41,7 +41,6 @@ export const AddBoardModal = ({ onClose }: Props) => {
                 title: title.trim(),
                 projectId,
             }
-            // сейчас — локальный стор, потом — await api.createBoard(board)
             addBoard(board)
             onClose()
         } catch {
@@ -66,7 +65,7 @@ export const AddBoardModal = ({ onClose }: Props) => {
                     placeholder='Название доски'
                     value={title}
                     onChange={e => { setTitle(e.target.value); setError('') }}
-                    onKeyDown={e => e.key === 'Enter' && !loading && onSubmit()}
+                    onKeyDown={e => e.key === 'Enter' && !!title.trim() && !loading && onSubmit()}
                     disabled={loading}
                     autoFocus
                 />

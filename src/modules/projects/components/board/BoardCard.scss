@@ -1,11 +1,22 @@
 .board-card {
-    padding: 0 20px 20px;
     background-color: var(--c-primary);
     border-radius: 10px;
     width: 400px;
     min-height: 200px;
     height: fit-content;
     flex-shrink: 0;
+    overflow: hidden;
+
+    &>button {
+        padding: 10px 0;
+        width: 100%;
+        border-radius: 0;
+        color: var(--c-bg);
+        background-color: transparent;
+        border: none;
+        box-shadow: 2px 2px 10px rgba($color: #000000, $alpha: 0.3);
+        text-align: center;
+    }
 
     &__title {
         font-size: var(--fs-body);
@@ -22,7 +33,7 @@
             user-select: none;
             top: center;
             transform: translateY(-20%);
-            right: 0;
+            right: 15px;
             font-size: var(--fs-h1);
             color: var(--c-bg);
             cursor: pointer;
@@ -37,6 +48,7 @@
         gap: 10px;
         width: 100%;
         min-height: 200px;
+        padding: 0 20px 10px;
 
         > span:only-child {
             margin: auto;

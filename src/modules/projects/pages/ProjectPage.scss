@@ -3,21 +3,62 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    padding: 0 30px;
+
 
     &__title {
         padding-top: 25px;
-        font-size: var(--fs-big);
+        display: flex;
+        align-items: center;
+        gap: 20px;
         margin-bottom: 40px;
-        font-family: var(--ff-accent);
-        font-weight: 500;
-        text-align: center;
+
+        span {
+            font-size: var(--fs-big);
+            font-family: var(--ff-accent);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        button {
+            padding: 5px 15px;
+            border: 2px solid var(--c-primary);
+            font-family: var(--ff-base);
+            color: var(--c-primary);
+            background-color: var(--c-bg);
+            font-size: var(--fs-body);
+            border-radius: 10px;
+            font-weight: 800;
+            user-select: none;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        section {
+            margin-left: auto;
+            color: var(--c-primary);
+            font-size: var(--fs-big);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .arr {
+            font-size: var(--fs-big);
+            font-weight: 100;
+            font-family: var(--ff-accent);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            cursor: pointer;
+        }
     }
 
     &__boards-box {
         display: flex;
         width: 100%;
         flex: 1;
-        padding: 0 60px;
         gap: 20px;
         overflow-x: auto;
 
@@ -42,6 +83,48 @@
 
             span {
                 margin-top: -5px;
+            }
+        }
+    }
+
+    aside {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        background-color: var(--c-bg);
+        height: 100%;
+        width: 20%;
+        padding: 40px 30px;
+        box-shadow: -2px 0 10px rgba($color: #000000, $alpha: 0.2) ;
+
+        .aside-title {
+            font-family: var(--ff-base);
+            font-size: var(--fs-h1);
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+
+            &>.x {
+                color: var(--c-primary);
+                width: 20px;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+
+        .aside-members-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            span {
+                font-size: var(--fs-h2);
+                color: var(--c-primary);
+                font-weight: 800;
             }
         }
     }

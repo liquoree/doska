@@ -7,9 +7,10 @@ import { useBoard } from '../../hooks/useBoard'
 
 type Props = {
     boardId: string
+    onAddTask: (boardId: string) => void
 }
 
-export const BoardCard = ({ boardId }: Props) => {
+export const BoardCard = ({ boardId, onAddTask }: Props) => {
     const { board, remove } = useBoard(boardId)
     const taskIds = useProjects(useShallow(s =>
         Object.values(s.tasks)
@@ -32,6 +33,7 @@ export const BoardCard = ({ boardId }: Props) => {
                         : <span>Задач пока нет</span>
                     }
                 </div>
+                <button onClick={() => onAddTask(boardId)}>Добавить задачу</button>
             </div>
         </BoardContext.Provider>
     )
