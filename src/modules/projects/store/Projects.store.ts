@@ -1,5 +1,4 @@
 import type { Task, Board, Project, User } from "@/shared/types/types"
-import { MockProjects, MockBoards, MockTasks, MockUsers } from "@/shared/utils/mock-projects"
 import { create } from "zustand"
 import { produce, type Draft } from 'immer'
 
@@ -21,27 +20,21 @@ interface ProjectState {
 
     addUser: (user: User) => void
     removeUser: (userId: string) => void
+
+    clearProject: (projectId: string) => void
 }
 
 const useProjects = create<ProjectState>((set) => ({
-    projects: MockProjects,
-    boards: MockBoards,
-    tasks: MockTasks,
-    users: MockUsers,
+    projects: {},
+    boards: {},
+    tasks: {},
+    users: {},
 
     addProject: (project) => set(produce(state => {
         state.projects[project.id] = project
     })),
 
     removeProject: (id) => set(produce(state => {
-        (Object.values(state.boards) as Board[])
-            .filter(b => b.projectId === id)
-            .forEach(b => {
-                (Object.values(state.tasks) as Task[])
-                    .filter(t => t.boardId === b.id)
-                    .forEach(t => delete state.tasks[t.id])
-                delete state.boards[b.id]
-            })
         delete state.projects[id]
     })),
 
@@ -74,6 +67,21 @@ const useProjects = create<ProjectState>((set) => ({
 
     removeUser: (userId) => set(produce(state => {
         delete state.users[userId]
+    })),
+
+    clearProject: (projectId: string) => set(produce(state => {
+        const boardIds = (Object.values(state.boards) as Board[])
+            .filter(b => b.projectId === projectId)
+            .map(b => b.id)
+
+        boardIds.forEach(boardId => {
+            (Object.values(state.tasks) as Task[])
+                .filter(t => t.boardId === boardId)
+                .forEach(t => delete state.tasks[t.id])
+            delete state.boards[boardId]
+        })
+
+        state.users = {}
     })),
 }))
 

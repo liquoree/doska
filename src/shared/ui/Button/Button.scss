@@ -7,4 +7,5 @@
 
 .base-button:disabled {
     background-color: var(--c-text-muted);
+    cursor: default;
 }

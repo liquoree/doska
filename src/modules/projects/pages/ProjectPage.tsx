@@ -8,25 +8,30 @@ import { useState } from "react"
 import { AddBoardModal } from "../components/modal/AddBoardModal"
 import { AddTaskModal } from "../components/modal/AddTaskModal"
 import type { User } from "@/shared/types/types"
+import { useLoadSingleProject } from "../hooks/useLoadSingleProject"
 
 export default function ProjectPage() {
     const [showAside, setShowAside] = useState(false)
     const [activeBoardId, setActiveBoardId] = useState<string | null>(null)
     const [showAddBoardModal, setShowAddBoardModal] = useState(false)
     const { projectId } = useParams<{ projectId: string }>()
+
+    const { loading } = useLoadSingleProject(projectId!)
     const project = useProjects(s => s.projects[projectId!])
     const boardIds = useProjects(useShallow(s =>
         Object.values(s.boards)
             .filter(b => b.projectId === projectId)
             .map(b => b.id)
     ))
-
     const projUsers = useProjects(useShallow(s =>
         projectId
         ? (Object.values(s.users) as User[]).filter(u => u.projectIds?.includes(projectId))
         : null
     ))
 
+    if (!projectId) return null
+    if (!project && !loading) return null
+    if (loading) return <div>Загрузка...</div>
     if (!project) return null
 
     return (
@@ -40,15 +45,15 @@ export default function ProjectPage() {
                 </h1>
                 <div className="project-page__boards-box" style={boardIds.length === 0 ? { flexDirection: 'column', alignItems: 'center' } : undefined}>
                   {boardIds.length > 0
-                    ? (boardIds.map(boardId => (
+                    && (boardIds.map(boardId => (
                         <BoardCard 
                             onAddTask={(boardId) => setActiveBoardId(boardId)} 
                             key={boardId} 
                             boardId={boardId} 
                         />
                     )))
-                    : (<span className="empty">Досок пока нет</span>)
                   }
+                  {(!loading && boardIds.length === 0) && <h2>Досок пока нет</h2>}
                   <div className="add-board-btn" onClick={() => setShowAddBoardModal(true)}><span>+</span></div>
                 </div>
 

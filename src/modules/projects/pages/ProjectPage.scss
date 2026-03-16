@@ -62,11 +62,6 @@
         gap: 20px;
         overflow-x: auto;
 
-        .empty {
-            text-align: center;
-            width: 100%;
-        }
-
         .add-board-btn {
             width: 100px;
             height: 100px;
@@ -110,7 +105,8 @@
 
             &>.x {
                 color: var(--c-primary);
-                width: 20px;
+                width: 40px;
+                text-align: center;
                 cursor: pointer;
                 user-select: none;
             }

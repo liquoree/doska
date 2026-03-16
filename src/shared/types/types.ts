@@ -4,6 +4,11 @@ export type User = {
     projectIds?: string[]
 }
 
+export type Member = {
+  id: string
+  nickname: string
+}
+
 export type Task = {
     id: string
     title: string

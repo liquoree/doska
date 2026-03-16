@@ -2,11 +2,29 @@
     width: 100%;
 
     h1 {
-        font-size: var(--fs-big);
-        padding: 25px 0;
-        font-family: var(--ff-accent);
-        font-weight: 500;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+
+        span {
+            font-size: var(--fs-big);
+            padding: 25px 0;
+            font-family: var(--ff-accent);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .add-proj-btn {
+            padding: 10px 15px;
+            background-color: var(--c-primary);
+            color: var(--c-bg);
+            border-radius: 10px;
+            font-size: var(--fs-body);
+            font-weight: 800;
+            width: fit-content;
+            cursor: pointer;
+        }
     }
 
     &__cards-box {
@@ -14,5 +32,6 @@
         flex-direction: column;
         gap: 16px;
         align-items: center;
+        padding-bottom: 30px;
     }
 }

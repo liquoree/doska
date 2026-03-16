@@ -27,6 +27,7 @@
             font-size: var(--fs-body);
             flex: 1;
             min-width: 0;
+            word-break: break-all;
 
             &--change-input {
                 border: 2px solid var(--c-primary);

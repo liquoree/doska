@@ -4,7 +4,7 @@ import { useProjectContext } from '../../context/ProjectContext'
 import useProjects from '../../store/Projects.store'
 import { useShallow } from 'zustand/shallow'
 import type { Board } from '@/shared/types/types'
-import { v4 as uuidv4 } from 'uuid'
+import { createBoard } from '@/api/boards'
 import './Modal.scss'
 
 type Props = {
@@ -20,6 +20,7 @@ const validate = (title: string, existingTitles: string[]): string => {
 export const AddBoardModal = ({ onClose }: Props) => {
     const projectId = useProjectContext()
     const addBoard = useProjects(s => s.addBoard)
+
     const existingTitles = useProjects(useShallow(s =>
         (Object.values(s.boards) as Board[])
             .filter(b => b.projectId === projectId)
@@ -32,19 +33,24 @@ export const AddBoardModal = ({ onClose }: Props) => {
 
     const onSubmit = async () => {
         const err = validate(title, existingTitles)
-        if (err) { setError(err); return }
+        if (err) {
+            setError(err)
+            return
+        }
 
         setLoading(true)
         try {
-            const board: Board = {
-                id: uuidv4(),
-                title: title.trim(),
-                projectId,
-            }
-            addBoard(board)
+            const { data } = await createBoard(projectId, title.trim())
+            addBoard(data)
             onClose()
-        } catch {
-            setError('Что-то пошло не так, попробуйте снова')
+        } catch (err: any) {
+            const message = err?.response?.data?.detail
+
+            if (typeof message === 'string') {
+                setError(message)
+            } else {
+                setError('Что-то пошло не так, попробуйте снова')
+            }
         } finally {
             setLoading(false)
         }
@@ -54,22 +60,29 @@ export const AddBoardModal = ({ onClose }: Props) => {
         <BaseModal
             title="Добавление доски"
             btnText="Добавить"
-            btnDisabled={!title.trim()}
+            btnDisabled={!title.trim() || loading}
             btnLoading={loading}
             onClose={onClose}
             onBtnClick={onSubmit}
         >
             <div className="modal-form">
                 <input
-                    className='modal-input'
-                    placeholder='Название доски'
+                    className="modal-input"
+                    placeholder="Название доски *"
                     value={title}
-                    onChange={e => { setTitle(e.target.value); setError('') }}
-                    onKeyDown={e => e.key === 'Enter' && !!title.trim() && !loading && onSubmit()}
+                    onChange={e => {
+                        setTitle(e.target.value)
+                        setError('')
+                    }}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter' && title.trim() && !loading) {
+                            onSubmit()
+                        }
+                    }}
                     disabled={loading}
                     autoFocus
                 />
-                {error && <div className='modal-error'>{error}</div>}
+                {error && <div className="modal-error">{error}</div>}
             </div>
         </BaseModal>
     )

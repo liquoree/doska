@@ -3,9 +3,9 @@ import { BaseModal } from "@/shared/components/modal/BaseModal"
 import useProjects from '../../store/Projects.store'
 import { useShallow } from 'zustand/shallow'
 import type { Task, User } from '@/shared/types/types'
-import { v4 as uuidv4 } from 'uuid'
 import './Modal.scss'
 import { useProjectContext } from '../../context/ProjectContext'
+import { createTask } from '@/api/tasks'
 
 type Props = {
     onClose: () => void
@@ -13,7 +13,7 @@ type Props = {
 }
 
 const validate = (title: string, existingTitles: string[]): string => {
-    if (title.length > 25) return 'Название не должно превышать 25 символов'
+    if (title.length > 100) return 'Название не должно превышать 100 символов'
     if (existingTitles.includes(title.trim().toLowerCase())) return 'Задача с таким названием уже существует'
     return ''
 }
@@ -48,18 +48,17 @@ export const AddTaskModal = ({ onClose, boardId }: Props) => {
 
         setLoading(true)
         try {
-            const task: Task = {
-                id: uuidv4(),
-                title: title.trim(),
-                boardId,
-                isCompleted: false,
-                responsibleIds: selectedIds,
-                createdAt: new Date().toISOString(),
-            }
-            addTask(task)
+            const {data} = await createTask(projectId, title.trim(), boardId)
+            addTask(data)
             onClose()
-        } catch {
-            setError('Что-то пошло не так, попробуйте снова')
+        } catch (err: any) {
+            const message = err?.response?.data?.detail
+
+            if (typeof message === 'string') {
+                setError(message)
+            } else {
+                setError('Что-то пошло не так, попробуйте снова')
+            }
         } finally {
             setLoading(false)
         }
@@ -77,7 +76,7 @@ export const AddTaskModal = ({ onClose, boardId }: Props) => {
             <div className="modal-form">
                 <input
                     className='modal-input'
-                    placeholder='Название задачи'
+                    placeholder='Название задачи *'
                     value={title}
                     onChange={e => { setTitle(e.target.value); setError('') }}
                     onKeyDown={e => e.key === 'Enter' && !!title.trim() && !loading && onSubmit()}

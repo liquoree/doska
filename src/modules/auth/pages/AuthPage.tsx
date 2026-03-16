@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
-
 import "./AuthPage.scss";
 
 type AuthMode = "login" | "register";
@@ -25,8 +24,8 @@ export default function AuthPage() {
   };
 
   const onSuccess = () => {
-    navigate(from, { replace: true });
-  };
+      navigate(from, { replace: true })
+  }
 
   return (
     <div className="auth-page-wrapper">

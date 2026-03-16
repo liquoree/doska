@@ -9,6 +9,22 @@
     box-shadow: var(--shadow);
     color: var(--c-bg);
     cursor: pointer;
+    position: relative;
+
+    .x {
+        position: absolute;
+        user-select: none;
+        top: 5px;
+        right: 5px;
+        font-size: var(--fs-h1);
+        cursor: pointer;
+        width: 20px;
+        transition: scale .1s ease-in-out;
+
+        &:hover {
+            scale: 1.4;
+        }
+    }
 
 
     h2 {
