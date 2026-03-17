@@ -1,6 +1,5 @@
 import { BaseModal } from "@/shared/components/modal/BaseModal"
 import { useTask } from "../../hooks/useTask"
-import { useProjectContext } from "../../context/ProjectContext"
 import useProjects from "../../store/Projects.store"
 import type { User } from "@/shared/types/types"
 import { useShallow } from "zustand/shallow"
@@ -12,10 +11,7 @@ type Props = {
 }
 
 export const RespModal = ({ taskId, onClose }: Props) => {
-    const projectId = useProjectContext()
-    const projectUsers = useProjects(useShallow(s =>
-        (Object.values(s.users) as User[]).filter(u => u.projectIds?.includes(projectId))
-    ))
+    const projectUsers = useProjects(useShallow(s => Object.values(s.users) as User[]))
     const { responsible, addResponsible, removeResponsible } = useTask(taskId)
     const responsibleIds = responsible.map(u => u.id)
     const availableUsers = projectUsers.filter(u => !responsibleIds.includes(u.id))

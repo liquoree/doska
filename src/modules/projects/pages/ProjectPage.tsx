@@ -23,11 +23,7 @@ export default function ProjectPage() {
             .filter(b => b.projectId === projectId)
             .map(b => b.id)
     ))
-    const projUsers = useProjects(useShallow(s =>
-        projectId
-        ? (Object.values(s.users) as User[]).filter(u => u.projectIds?.includes(projectId))
-        : null
-    ))
+    const projectUsers = useProjects(useShallow(s => Object.values(s.users) as User[]))
 
     if (!projectId) return null
     if (!project && !loading) return null
@@ -69,7 +65,7 @@ export default function ProjectPage() {
                       </span>
                     </div>
                     <div className="aside-members-box">
-                      {projUsers?.map(e => (
+                      {projectUsers?.map(e => (
                         <span>@{e.nickname}</span>
                       ))}
                     </div>

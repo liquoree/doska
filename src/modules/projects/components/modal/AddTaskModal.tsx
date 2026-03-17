@@ -27,9 +27,7 @@ export const AddTaskModal = ({ onClose, boardId }: Props) => {
             .filter(t => t.boardId === boardId)
             .map(t => t.title.toLowerCase())
     ))
-    const projectUsers = useProjects(useShallow(s =>
-        (Object.values(s.users) as User[]).filter(u => u.projectIds?.includes(projectId))
-    ))
+    const projectUsers = useProjects(useShallow(s => Object.values(s.users) as User[]))
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState('')
