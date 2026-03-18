@@ -1,7 +1,12 @@
 import useProjects from '../store/Projects.store'
 import { useProjectContext } from '../context/ProjectContext'
 import { useShallow } from 'zustand/react/shallow'
-import { updateTask as updateTaskApi, deleteTask, addResponsible, removeResponsible } from '@/api/tasks'
+import { 
+    updateTask as updateTaskApi, 
+    deleteTask, 
+    addResponsible as addResponsibleApi, 
+    removeResponsible as removeResponsibleApi
+} from '@/api/tasks'
 
 export const useTask = (taskId: string) => {
     const projectId = useProjectContext()
@@ -24,14 +29,12 @@ export const useTask = (taskId: string) => {
             updateTask(taskId, t => { t.title = title })
         },
         addResponsible: async (userId: string) => {
-            await addResponsible(projectId, taskId, userId)
-            updateTask(taskId, t => { t.responsibleIds.push(userId) })
+            const { data } = await addResponsibleApi(projectId, taskId, userId)
+            updateTask(taskId, t => { t.responsibleIds = data.responsibleIds })
         },
         removeResponsible: async (userId: string) => {
-            await removeResponsible(projectId, taskId, userId)
-            updateTask(taskId, t => {
-                t.responsibleIds = t.responsibleIds.filter(id => id !== userId)
-            })
+            const { data } = await removeResponsibleApi(projectId, taskId, userId)
+            updateTask(taskId, t => { t.responsibleIds = data.responsibleIds })
         },
         remove: async () => {
             await deleteTask(projectId, taskId)
