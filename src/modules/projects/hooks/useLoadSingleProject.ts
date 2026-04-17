@@ -3,6 +3,7 @@ import { getBoards } from '@/api/boards'
 import { getTasks } from '@/api/tasks'
 import { getMembers, getProjects } from '@/api/projects'
 import useProjects from '../store/Projects.store'
+import { isDragging } from '../utils/dragState'
 
 export const useLoadSingleProject = (projectId: string) => {
   const [loading, setLoading] = useState(true)
@@ -10,6 +11,8 @@ export const useLoadSingleProject = (projectId: string) => {
   const { addBoard, addTask, addUser, clearProject, addProject } = useProjects()
 
   const load = async (initial = false) => {
+    if (!initial && isDragging()) return  // пропускаем тик во время drag
+
     const token = localStorage.getItem('token')
     if (!token) {
       if (initial) setLoading(false)
@@ -17,11 +20,9 @@ export const useLoadSingleProject = (projectId: string) => {
     }
     try {
       if (initial) {
-        // загружаем список проектов если стор пустой
         const projects = useProjects.getState().projects
         if (Object.keys(projects).length === 0) {
           const { data } = await getProjects()
-          console.log('PROJECTS:', data)
           data.forEach(addProject)
         }
         clearProject(projectId)
@@ -47,9 +48,7 @@ export const useLoadSingleProject = (projectId: string) => {
 
   useEffect(() => {
     load(true)
-
     const interval = setInterval(() => load(false), 5000)
-
     return () => clearInterval(interval)
   }, [projectId])
 

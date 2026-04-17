@@ -34,4 +34,11 @@
         align-items: center;
         padding-bottom: 30px;
     }
+
+    .leave-account {
+        font-size: var(--fs-body);
+        color: red;
+        cursor: pointer;
+        text-align: center;
+    }
 }

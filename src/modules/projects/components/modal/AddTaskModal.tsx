@@ -6,6 +6,7 @@ import type { Task, User } from '@/shared/types/types'
 import './Modal.scss'
 import { useProjectContext } from '../../context/ProjectContext'
 import { createTask } from '@/api/tasks'
+import { addResponsible as addResponsibleApi } from '@/api/tasks'
 
 type Props = {
     onClose: () => void
@@ -46,22 +47,30 @@ export const AddTaskModal = ({ onClose, boardId }: Props) => {
 
         setLoading(true)
         try {
-            const {data} = await createTask(projectId, title.trim(), boardId)
+            const { data } = await createTask(projectId, title.trim(), boardId)
             addTask(data)
+
+            // ← отправляем ответственных после создания задачи
+            if (selectedIds.length > 0) {
+                const results = await Promise.all(
+                    selectedIds.map(userId => addResponsibleApi(projectId, data.id, userId))
+                )
+                // берём responsibleIds из последнего ответа и обновляем стор
+                const last = results[results.length - 1]
+                useProjects.getState().updateTask(data.id, t => {
+                    t.responsibleIds = last.data.responsibleIds
+                })
+            }
+
             onClose()
         } catch (err: any) {
             const message = err?.response?.data?.detail
-
-            if (typeof message === 'string') {
-                setError(message)
-            } else {
-                setError('Что-то пошло не так, попробуйте снова')
-            }
+            setError(typeof message === 'string' ? message : 'Что-то пошло не так, попробуйте снова')
         } finally {
             setLoading(false)
         }
     }
-
+    
     return (
         <BaseModal
             title="Добавление задачи"

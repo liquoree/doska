@@ -14,7 +14,7 @@ export const useTask = (taskId: string) => {
     const removeTask = useProjects(state => state.removeTask)
     const task = useProjects(state => state.tasks[taskId])
     const responsible = useProjects(useShallow(state =>
-        task.responsibleIds.map(id => state.users[id]).filter(Boolean)
+        (task?.responsibleIds ?? []).map(id => state.users[id]).filter(Boolean)
     ))
 
     return {

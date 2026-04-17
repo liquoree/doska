@@ -45,6 +45,15 @@ export default function ProjectsListPage() {
                 }
                 {(!loading && projects.length === 0) && <h2>Проектов пока нет</h2>}
                 {error && <h2>{error}</h2>}
+                <span
+                    className="leave-account"
+                    onClick={() => {
+                        localStorage.removeItem('token')
+                        window.location.reload()
+                    }}
+                >
+                    Выйти из аккаунта
+                </span>
             </div>
             {showAddProjModal &&
                 <AddProjectModal onClose={() => setShowAddProjModal(false)}/>
