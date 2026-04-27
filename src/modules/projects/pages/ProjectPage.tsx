@@ -7,7 +7,7 @@ import { useShallow } from "zustand/shallow"
 import { useState, useEffect } from "react"
 import { AddBoardModal } from "../components/modal/AddBoardModal"
 import { AddTaskModal } from "../components/modal/AddTaskModal"
-import type { User } from "@/shared/types/types"
+import type { Task, User } from "@/shared/types/types"
 import { useLoadSingleProject } from "../hooks/useLoadSingleProject"
 import { DndContext, DragOverlay, PointerSensor, closestCorners, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -49,24 +49,22 @@ export default function ProjectPage() {
 
     // синкаем локальный порядок из стора — только когда не идёт drag
     useEffect(() => {
-        setTaskOrder(prev => {
-            const byBoard: Record<string, string[]> = {}
-            Object.values(allTasks).forEach(task => {
-                if (!byBoard[task.boardId]) byBoard[task.boardId] = []
-                byBoard[task.boardId].push(task.id)
-            })
+        const byBoard: Record<string, Task[]> = {}
 
-            const next: Record<string, string[]> = {}
-            for (const boardId of Object.keys(byBoard)) {
-                const freshIds = byBoard[boardId]
-                const prevOrder = prev[boardId] ?? []
-                // сохраняем порядок, убираем удалённые, добавляем новые в конец
-                const kept = prevOrder.filter(id => freshIds.includes(id))
-                const added = freshIds.filter(id => !prevOrder.includes(id))
-                next[boardId] = [...kept, ...added]
-            }
-            return next
+        Object.values(allTasks).forEach(task => {
+            if (!byBoard[task.boardId]) byBoard[task.boardId] = []
+            byBoard[task.boardId].push(task)
         })
+
+        const next: Record<string, string[]> = {}
+
+        for (const boardId of Object.keys(byBoard)) {
+            next[boardId] = byBoard[boardId]
+                .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+                .map(t => t.id)
+        }
+
+        setTaskOrder(next)
     }, [allTasks])
 
     if (!projectId) return null
@@ -102,16 +100,21 @@ export default function ProjectPage() {
         }
 
         if (sourceBoardId === targetBoardId) {
-            // ── сортировка внутри доски ──────────────────────────────────
             const order = taskOrder[sourceBoardId] ?? []
             const oldIndex = order.indexOf(taskId)
             const newIndex = order.indexOf(overId)
 
             if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
-                setTaskOrder(prev => ({
-                    ...prev,
-                    [sourceBoardId]: arrayMove(order, oldIndex, newIndex),
-                }))
+                const newOrder = arrayMove(order, oldIndex, newIndex)
+
+                setTaskOrder(prev => ({ ...prev, [sourceBoardId]: newOrder }))
+
+                Promise.all(
+                    newOrder.map((id, index) => updateTask(projectId, id, { position: index }))
+                ).catch(() => {
+                    // откат при ошибке
+                    setTaskOrder(prev => ({ ...prev, [sourceBoardId]: order }))
+                })
             }
             setDragging(false)
             return

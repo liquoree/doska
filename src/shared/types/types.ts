@@ -12,6 +12,7 @@ export type Member = {
 export type Task = {
     id: string
     title: string
+    position?: number
     isCompleted: boolean
     responsibleIds: string[]
     createdAt: string

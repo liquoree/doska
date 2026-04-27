@@ -8,6 +8,7 @@ export const updateTask = (projectId: string, taskId: string, data: Partial<Task
         title: data.title,
         is_completed: data.isCompleted,
         board_id: data.boardId,
+        position: data.position,
     })
 export const deleteTask = (projectId: string, taskId: string) => client.delete(`/projects/${projectId}/tasks/${taskId}`)
 export const addResponsible = (projectId: string, taskId: string, userId: string) => client.post(`/projects/${projectId}/tasks/${taskId}/responsible/${userId}`)
