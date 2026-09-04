@@ -16,7 +16,11 @@ doska — это простой сервис для управления зад�
 - Подключение к существующим проектам по уникальному коду
 - Совместная работа над досками
 
-Проект создан для упрощенного управления задачами и демонстрирует основные принципы работы с Kanban-системами.
+Проект разработан в рамках обучения в ПетрГУ.
+
+## Технологии
+
+React, TypeScript, Zustand
 
 ---
 
@@ -38,4 +42,12 @@ Users can create their own boards, add tasks, change task statuses, and organize
 - Joining existing projects using a unique project code
 - Collaborative board management
 
-The project is designed as a simple task management solution and demonstrates the core principles of Kanban-based workflow systems.
+The project was developed during my studies at the PetrSU.
+
+## Technologies
+
+React, TypeScript, Zustand
+
+## Technologies
+
+React, TypeScript, Zustand
