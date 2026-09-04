@@ -2,7 +2,9 @@
 
 doska — это простой сервис для управления задачами и небольшими проектами, вдохновленный концепцией Kanban-досок.
 
-Пользователи могут создавать собственные доски, добавлять задачи, изменять их статусы и управлять рабочим процессом с помощью удобного интерфейса с поддержкой drag-and-drop.
+Данный репозиторий содержит frontend-часть приложения doska. Пользователи могут создавать собственные доски, добавлять задачи, изменять их статусы и управлять рабочим процессом с помощью удобного интерфейса с поддержкой drag-and-drop.
+
+Backend-часть проекта доступна в отдельном репозитории: [doska-backend](https://github.com/liquoree/doska-backend).
 
 ## Возможности
 
@@ -28,7 +30,9 @@ React, TypeScript, Zustand
 
 doska is a lightweight task management application inspired by the Kanban workflow concept.
 
-Users can create their own boards, add tasks, change task statuses, and organize workflows using an intuitive drag-and-drop interface.
+This repository contains the frontend part of the doska application. Users can create their own boards, add tasks, change task statuses, and organize workflows using an intuitive drag-and-drop interface.
+
+The backend part of the project is available in a separate repository: [doska-backend](https://github.com/liquoree/doska-backend).
 
 ## Features
 
