@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# doska
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+doska — это простой сервис для управления задачами и небольшими проектами, вдохновленный концепцией Kanban-досок.
 
-Currently, two official plugins are available:
+Пользователи могут создавать собственные доски, добавлять задачи, изменять их статусы и управлять рабочим процессом с помощью удобного интерфейса с поддержкой drag-and-drop.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Возможности
 
-## React Compiler
+- Регистрация и авторизация пользователей
+- Создание персональных досок
+- Добавление и управление задачами
+- Статусы задач:
+  - выполнено
+  - невыполнено
+- Перемещение задач между статусами с помощью drag-and-drop
+- Подключение к существующим проектам по уникальному коду
+- Совместная работа над досками
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Проект создан для упрощенного управления задачами и демонстрирует основные принципы работы с Kanban-системами.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# doska (Russian: "board")
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+doska is a lightweight task management application inspired by the Kanban workflow concept.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Users can create their own boards, add tasks, change task statuses, and organize workflows using an intuitive drag-and-drop interface.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- User registration and authentication
+- Personal board creation
+- Task creation and management
+- Task statuses:
+  - completed
+  - incomplete
+- Drag-and-drop task organization
+- Joining existing projects using a unique project code
+- Collaborative board management
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+The project is designed as a simple task management solution and demonstrates the core principles of Kanban-based workflow systems.
