@@ -47,7 +47,3 @@ The project was developed during my studies at the PetrSU.
 ## Technologies
 
 React, TypeScript, Zustand
-
-## Technologies
-
-React, TypeScript, Zustand
